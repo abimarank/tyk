@@ -288,9 +288,6 @@ func processSpec(spec *APISpec, apisByListen map[string]int,
 						BaseMiddleware: baseMid,
 						Path:           obj.Path,
 						SymbolName:     obj.Name,
-						Pre:            true,
-						UseSession:     obj.RequireSession,
-						Auth:           false,
 					},
 				)
 			} else {
@@ -329,9 +326,6 @@ func processSpec(spec *APISpec, apisByListen map[string]int,
 						BaseMiddleware: baseMid,
 						Path:           obj.Path,
 						SymbolName:     obj.Name,
-						Pre:            false,
-						UseSession:     obj.RequireSession,
-						Auth:           false,
 					},
 				)
 			} else {
@@ -360,9 +354,6 @@ func processSpec(spec *APISpec, apisByListen map[string]int,
 						BaseMiddleware: baseMid,
 						Path:           obj.Path,
 						SymbolName:     obj.Name,
-						Pre:            true,
-						UseSession:     obj.RequireSession,
-						Auth:           false,
 					},
 				)
 			} else {
@@ -428,9 +419,6 @@ func processSpec(spec *APISpec, apisByListen map[string]int,
 					BaseMiddleware: baseMid,
 					Path:           mwAuthCheckFunc.Path,
 					SymbolName:     mwAuthCheckFunc.Name,
-					Pre:            true,
-					UseSession:     false,
-					Auth:           true,
 				},
 			)
 		}
@@ -450,9 +438,6 @@ func processSpec(spec *APISpec, apisByListen map[string]int,
 						BaseMiddleware: baseMid,
 						Path:           obj.Path,
 						SymbolName:     obj.Name,
-						Pre:            false,
-						UseSession:     obj.RequireSession,
-						Auth:           false,
 					},
 				)
 			} else {
@@ -486,9 +471,6 @@ func processSpec(spec *APISpec, apisByListen map[string]int,
 						BaseMiddleware: baseMid,
 						Path:           obj.Path,
 						SymbolName:     obj.Name,
-						Pre:            false,
-						UseSession:     obj.RequireSession,
-						Auth:           false,
 					},
 				)
 			} else {
@@ -581,7 +563,7 @@ func (d *DummyProxyHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 				handler = targetAPI.middlewareChain.ThisHandler
 			} else {
 				handler := ErrorHandler{*d.SH.Base()}
-				handler.HandleError(w, r, "Can't detect loop target", http.StatusInternalServerError)
+				handler.HandleError(w, r, "Can't detect loop target", http.StatusInternalServerError, true)
 				return
 			}
 		}

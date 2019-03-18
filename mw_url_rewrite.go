@@ -11,6 +11,7 @@ import (
 	"strings"
 
 	"github.com/TykTechnologies/tyk/apidef"
+	"github.com/TykTechnologies/tyk/ctx"
 	"github.com/TykTechnologies/tyk/regexp"
 	"github.com/TykTechnologies/tyk/user"
 )
@@ -327,7 +328,7 @@ func (m *URLRewriteMiddleware) CheckHostRewrite(oldPath, newTarget string, r *ht
 	newAsURL, _ := url.Parse(newTarget)
 	if newAsURL.Scheme != LoopScheme && oldAsURL.Host != newAsURL.Host {
 		log.Debug("Detected a host rewrite in pattern!")
-		setCtxValue(r, RetainHost, true)
+		setCtxValue(r, ctx.RetainHost, true)
 	}
 }
 
