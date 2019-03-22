@@ -497,8 +497,8 @@ func buildAPI(apiGens ...func(spec *APISpec)) (specs []*APISpec) {
 			panic(err)
 		}
 
-		specs = append(specs, spec)
 		gen(spec)
+		specs = append(specs, spec)
 	}
 
 	return specs
